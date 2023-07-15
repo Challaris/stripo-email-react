@@ -1,4 +1,5 @@
 import { exPreviewPopup } from "./libs";
+import { exVideoLirary } from "./libs/videoLibrary";
 
 function stripoApiRequest(method, url, data, callback) {
 	var req = new XMLHttpRequest();
@@ -77,6 +78,10 @@ export function initStripo(options) {
 			locale: "en",
 			html: options.html,
 			css: options.css,
+			externalVideosLibrary: {
+				buttonText: "Pick up my video",
+				open: exVideoLirary(),
+			},
 			apiRequestData: apiRequestData,
 			userFullName: "Plugin Demo User",
 			versionHistory: {
@@ -123,4 +128,5 @@ export function loadDemoTemplate(callback) {
 		}
 	);
 	window.ExternalPreviewPopup = exPreviewPopup();
+	// window.ExternalVideosLibrary = exVideoLirary();
 }
