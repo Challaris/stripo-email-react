@@ -1,4 +1,4 @@
-import { exPreviewPopup, exVideoLirary, externalImgLib, externalLinkEventPopup } from "./libs";
+import { exPreviewPopup, exVideoLirary, extCustomFont, externalImgLib, externalLinkEventPopup } from "./libs";
 
 function stripoApiRequest(method, url, data, callback) {
 	var req = new XMLHttpRequest();
@@ -125,6 +125,7 @@ export function initStripo(options) {
 				"#externalImagesLibrary",
 				"#externalFileLibrary",
 				"#externalDisplayConditionsPopup",
+				"#externalFileLibrary",
 			],
 			externalLinkControlConfiguration: {
 				getMarkup: function () {
@@ -189,6 +190,24 @@ export function initStripo(options) {
 			// 		],
 			// 	},
 			// ],
+			externalCustomFont: window.ExternalCustomFont,
+			addCustomFontTitle: "Add custom font",
+			editorFonts: {
+				showDefaultStandardFonts: true,
+				showDefaultNotStandardFonts: true,
+				customFonts: [
+					{
+						name: "Oswald",
+						fontFamily: "'Oswald', 'helvetica neue', helvetica, arial, sans-serif",
+						url: "https://fonts.googleapis.com/css?family=Oswald",
+					},
+					{
+						name: "Barriecito",
+						fontFamily: "'Barriecito', cursive",
+						url: "https://fonts.googleapis.com/css?family=Barriecito&display=swap",
+					},
+				],
+			},
 		});
 	};
 	document.body.appendChild(script);
@@ -216,4 +235,5 @@ export function loadDemoTemplate(callback) {
 	window.ExternalImagesLibrary = externalImgLib();
 	// window.ExternalFilesLibrary = externalFileLib();
 	// window.ExternalDisplayConditions = extDisplayConditions();
+	window.ExternalCustomFont = extCustomFont(); //This is for paid plans
 }

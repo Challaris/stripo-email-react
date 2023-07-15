@@ -1,3 +1,4 @@
+export * from "./externalCustomFont";
 export * from "./externalDisplayCondition";
 export * from "./externalFileLib";
 export * from "./externalImageLib";
