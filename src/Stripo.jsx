@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import { initStripo, loadDemoTemplate } from "./stripo.helper";
+import { initStripo, loadDemoTemplate } from "./stripoConfig/stripo.helper";
 
 const Stripo = () => {
 	const handlePreviewBtnClick = () => {
