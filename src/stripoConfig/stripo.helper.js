@@ -120,7 +120,12 @@ export function initStripo(options) {
 				}
 				return true;
 			},
-			ignoreClickOutsideSelectors: ["#externalPopupContainer", "#externalImagesLibrary", "#externalFileLibrary"],
+			ignoreClickOutsideSelectors: [
+				"#externalPopupContainer",
+				"#externalImagesLibrary",
+				"#externalFileLibrary",
+				"#externalDisplayConditionsPopup",
+			],
 			externalLinkControlConfiguration: {
 				getMarkup: function () {
 					return (
@@ -155,6 +160,35 @@ export function initStripo(options) {
 						getLinkDomElement().getAttribute("event-id");
 				},
 			},
+			// conditionsEnabled: true,
+			// customConditionsEnabled: true,
+			// conditionCategories: [
+			// 	{
+			// 		type: "EXTERNAL",
+			// 		category: "Complex conditions",
+			// 		openExternalDisplayConditionsDialog: window.ExternalDisplayConditions.openExternalDisplayConditionsDialog,
+			// 	},
+			// 	{
+			// 		type: "PREDEFINED",
+			// 		category: "Gender",
+			// 		conditions: [
+			// 			{
+			// 				id: "1",
+			// 				name: "Men",
+			// 				description: "Men only",
+			// 				beforeScript: "<!-- %IF in_array('men', $CATEGORY) -->",
+			// 				afterScript: "<!-- %/IF% -->",
+			// 			},
+			// 			{
+			// 				id: "2",
+			// 				name: "Women",
+			// 				description: "Women only",
+			// 				beforeScript: "<!-- %IF in_array('women', $CATEGORY) -->",
+			// 				afterScript: "<!-- %/IF% -->",
+			// 			},
+			// 		],
+			// 	},
+			// ],
 		});
 	};
 	document.body.appendChild(script);
@@ -181,4 +215,5 @@ export function loadDemoTemplate(callback) {
 	window.PopupLinksSettings = externalLinkEventPopup();
 	window.ExternalImagesLibrary = externalImgLib();
 	// window.ExternalFilesLibrary = externalFileLib();
+	// window.ExternalDisplayConditions = extDisplayConditions();
 }
