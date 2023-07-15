@@ -1,4 +1,4 @@
-import { exPreviewPopup, exVideoLirary, externalLinkEventPopup } from "./libs";
+import { exPreviewPopup, exVideoLirary, externalImgLib, externalLinkEventPopup } from "./libs";
 
 function stripoApiRequest(method, url, data, callback) {
 	var req = new XMLHttpRequest();
@@ -79,8 +79,13 @@ export function initStripo(options) {
 			css: options.css,
 			externalVideosLibrary: {
 				buttonText: "Pick up my video",
-				open: exVideoLirary(),
+				open: window.ExternalVideosLibrary,
 			},
+			externalImagesLibrary: window.ExternalImagesLibrary,
+			// externalFilesLibrary: {
+			// 	buttonText: "Pick up my file",
+			// 	open: window.ExternalFilesLibrary,
+			// },
 			apiRequestData: apiRequestData,
 			userFullName: "Plugin Demo User",
 			versionHistory: {
@@ -115,7 +120,7 @@ export function initStripo(options) {
 				}
 				return true;
 			},
-			ignoreClickOutsideSelectors: "#externalPopupContainer",
+			ignoreClickOutsideSelectors: ["#externalPopupContainer", "#externalImagesLibrary", "#externalFileLibrary"],
 			externalLinkControlConfiguration: {
 				getMarkup: function () {
 					return (
@@ -137,7 +142,7 @@ export function initStripo(options) {
 					customizeButton.addEventListener(
 						"click",
 						function () {
-							externalLinkEventPopup().openPopup(getLinkDomElement(), function () {
+							window.PopupLinksSettings.openPopup(getLinkDomElement(), function () {
 								applyChangesCallback();
 								getControlDomContainer().querySelector("#eventIdControl").innerHTML =
 									getLinkDomElement().getAttribute("event-id");
@@ -172,5 +177,8 @@ export function loadDemoTemplate(callback) {
 		}
 	);
 	window.ExternalPreviewPopup = exPreviewPopup();
-	// window.ExternalVideosLibrary = exVideoLirary();
+	window.ExternalVideosLibrary = exVideoLirary();
+	window.PopupLinksSettings = externalLinkEventPopup();
+	window.ExternalImagesLibrary = externalImgLib();
+	// window.ExternalFilesLibrary = externalFileLib();
 }
