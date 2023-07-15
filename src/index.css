@@ -15,6 +15,7 @@
 }
 #root {
 	max-width: 1280px;
+	width: 100%;
 	margin: 0 auto;
 	padding: 2rem;
 	text-align: center;
@@ -73,3 +74,38 @@ button:focus-visible {
 		background-color: #f9f9f9;
 	}
 }
+
+/* Stripo custom styles */
+#externalSystemContainer {
+	background-color: darkgrey;
+	padding: 5px 0 5px 20px;
+}
+#undoButton,
+#redoButton {
+	display: none;
+}
+#stripoSettingsContainer {
+	width: 400px;
+	float: left;
+}
+#stripoPreviewContainer {
+	width: calc(100% - 400px);
+	float: left;
+}
+.notification-zone {
+	position: fixed;
+	width: 400px;
+	z-index: 99999;
+	right: 20px;
+	bottom: 80px;
+}
+.control-button {
+	border-radius: 17px;
+	padding: 5px 10px;
+	border-color: grey;
+}
+#changeHistoryLink {
+	cursor: pointer;
+}
+
+/* Stripo custom styles */
