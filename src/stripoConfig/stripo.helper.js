@@ -1,5 +1,4 @@
-import { exPreviewPopup } from "./libs";
-import { exVideoLirary } from "./libs/videoLibrary";
+import { exPreviewPopup, exVideoLirary, externalLinkEventPopup } from "./libs";
 
 function stripoApiRequest(method, url, data, callback) {
 	var req = new XMLHttpRequest();
@@ -105,6 +104,51 @@ export function initStripo(options) {
 						callback(JSON.parse(data).token);
 					}
 				);
+			},
+			canBeSavedToLibrary: function (moduleHtml) {
+				//Disable to save as modules all containers/structures/stripes that contain image blocks
+				if (moduleHtml.indexOf("esd-block-image") > -1) {
+					// show notifications if needed
+					// notifications.error('Image blocks can not be saved as modules');
+					console.log("Image blocks can not be saved as modules");
+					return false;
+				}
+				return true;
+			},
+			ignoreClickOutsideSelectors: "#externalPopupContainer",
+			externalLinkControlConfiguration: {
+				getMarkup: function () {
+					return (
+						'<div class="form-group">' +
+						'   <div class="col-xs-12">' +
+						'       <label for="eventIdControl">Event ID:</label>' +
+						'       <span id="eventIdControl" style="font-weight: bold"></span>' +
+						"   </div>" +
+						'   <div class="col-xs-12">' +
+						'       <button id="customizeLinkEventId" class="btn btn-success btn-block">' +
+						"           Customize" +
+						"       </button>" +
+						"   </div>" +
+						"</div>"
+					);
+				},
+				onRendered: function (getLinkDomElement, getControlDomContainer, applyChangesCallback) {
+					const customizeButton = getControlDomContainer().querySelector("#customizeLinkEventId");
+					customizeButton.addEventListener(
+						"click",
+						function () {
+							externalLinkEventPopup().openPopup(getLinkDomElement(), function () {
+								applyChangesCallback();
+								getControlDomContainer().querySelector("#eventIdControl").innerHTML =
+									getLinkDomElement().getAttribute("event-id");
+							});
+						}.bind(this)
+					);
+				},
+				updateControlValues: function (getLinkDomElement, getControlDomContainer) {
+					getControlDomContainer().querySelector("#eventIdControl").innerHTML =
+						getLinkDomElement().getAttribute("event-id");
+				},
 			},
 		});
 	};
