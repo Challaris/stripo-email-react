@@ -92,6 +92,9 @@ button:focus-visible {
 	width: calc(100% - 400px);
 	float: left;
 }
+#changeHistoryLink {
+	cursor: pointer;
+}
 .notification-zone {
 	position: fixed;
 	width: 400px;
