@@ -213,22 +213,12 @@ export function initStripo(options) {
 	document.body.appendChild(script);
 }
 
-export function loadDemoTemplate(callback) {
-	stripoApiRequest(
-		"GET",
-		"https://raw.githubusercontent.com/ardas/stripo-plugin/master/Public-Templates/Basic-Templates/Trigger%20newsletter%20mockup/Trigger%20newsletter%20mockup.html",
-		null,
-		function (html) {
-			stripoApiRequest(
-				"GET",
-				"https://raw.githubusercontent.com/ardas/stripo-plugin/master/Public-Templates/Basic-Templates/Trigger%20newsletter%20mockup/Trigger%20newsletter%20mockup.css",
-				null,
-				function (css) {
-					callback({ html, css });
-				}
-			);
-		}
-	);
+export function loadDemoTemplate(callback, { htmlTemplate, cssTemplate }) {
+	stripoApiRequest("GET", htmlTemplate, null, function (html) {
+		stripoApiRequest("GET", cssTemplate, null, function (css) {
+			callback({ html, css });
+		});
+	});
 	window.ExternalPreviewPopup = exPreviewPopup();
 	window.ExternalVideosLibrary = exVideoLirary();
 	window.PopupLinksSettings = externalLinkEventPopup();

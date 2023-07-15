@@ -1,7 +1,10 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { initStripo, loadDemoTemplate } from "./stripoConfig/stripo.helper";
+import { templateList } from "./utils";
 
 const Stripo = () => {
+	const [currentTemplate, setCurrentTemplate] = useState(templateList[5]);
+
 	const handlePreviewBtnClick = () => {
 		window.StripoApi.compileEmail((error, html, ampHtml) => {
 			window.ExternalPreviewPopup.openPreviewPopup(html, ampHtml);
@@ -9,7 +12,9 @@ const Stripo = () => {
 	};
 
 	useEffect(() => {
-		loadDemoTemplate(initStripo);
+		const { cssTemplate, htmlTemplate } = currentTemplate;
+
+		loadDemoTemplate(initStripo, { htmlTemplate, cssTemplate });
 
 		const previewButton = document.querySelector("#previewButton");
 		previewButton.addEventListener("click", handlePreviewBtnClick);
@@ -17,7 +22,13 @@ const Stripo = () => {
 		return () => {
 			previewButton.removeEventListener("click", handlePreviewBtnClick);
 		};
-	}, []);
+	}, [currentTemplate]);
+
+	const handleTemplateChange = (e) => {
+		const value = e.target.value;
+		const newTemplate = templateList.find((template) => template.title === value);
+		setCurrentTemplate(newTemplate);
+	};
 
 	return (
 		<div className="stripo">
@@ -38,6 +49,18 @@ const Stripo = () => {
 				<span id="changeHistoryContainer" style={{ display: "none" }}>
 					Last change: <a id="changeHistoryLink"></a>
 				</span>
+				<select
+					name="select-template"
+					id="select-template"
+					onChange={handleTemplateChange}
+					value={currentTemplate.title}
+				>
+					{templateList.map((template) => (
+						<option selected={template.title === currentTemplate.title} key={template.title} value={template.title}>
+							{template.title}
+						</option>
+					))}
+				</select>
 			</div>
 			<div className="notification-zone"></div>
 			<div>
