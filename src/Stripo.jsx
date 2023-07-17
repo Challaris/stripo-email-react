@@ -21,6 +21,7 @@ const Stripo = () => {
 
 		return () => {
 			previewButton.removeEventListener("click", handlePreviewBtnClick);
+			window.StripoApi?.stop();
 		};
 	}, [currentTemplate]);
 
