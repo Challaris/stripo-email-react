@@ -16,9 +16,9 @@ function stripoApiRequest(method, url, data, callback) {
 	req.send(data);
 }
 
-export function initStripo(options) {
+export function initStripo(options, emailId, onTemplateLoaded) {
 	const apiRequestData = {
-		emailId: 123,
+		emailId,
 	};
 	const script = document.createElement("script");
 	script.id = "stripoScript";
@@ -77,6 +77,9 @@ export function initStripo(options) {
 			locale: "en",
 			html: options.html,
 			css: options.css,
+			onTemplateLoaded,
+			enableXSSSecurity: true,
+			ampFormServices: true,
 			externalVideosLibrary: {
 				buttonText: "Pick up my video",
 				open: window.ExternalVideosLibrary,
@@ -213,10 +216,14 @@ export function initStripo(options) {
 	document.body.appendChild(script);
 }
 
-export function loadDemoTemplate(callback, { htmlTemplate, cssTemplate }) {
+export function loadDemoTemplate(
+	callback,
+	{ htmlTemplate, cssTemplate, emailId, ...rest },
+	onTemplateLoaded = () => {}
+) {
 	stripoApiRequest("GET", htmlTemplate, null, function (html) {
 		stripoApiRequest("GET", cssTemplate, null, function (css) {
-			callback({ html, css });
+			callback({ html, css, ...rest }, emailId, onTemplateLoaded);
 		});
 	});
 	window.ExternalPreviewPopup = exPreviewPopup();
